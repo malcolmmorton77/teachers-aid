@@ -6,12 +6,12 @@
 #	who were caught changing a large portion of student test answers.
 
 from string import *
+from random import *
+from datetime import *
 
-testLength = 20
 #testKey = {} // later version for reading in a filename
 testKey = {1:'A', 2:'D', 3:'C', 4:'A', 5:'D', 6:'B', 7:'A', 8:'B', 9:'D', 10:'A', 11:'C', 12:'B', 13:'D', 14:'D', 15:'C', 16:'A', 17:'A', 18:'B', 19:'D', 20:'B'}
-testConverter = {1:'A', 2:'B', 3:'C', 4:'D'}
-arr=[]
+tests=[]
 
 #def createDict():
 	#return testKey // later version for reading in a file
@@ -20,10 +20,11 @@ def printKey():
 	print("The test key is:")
 	str = ""
 	i = 1
-	while i<=testLength:
+	while i in testKey:
 		str += testKey[i]
 		i += 1
 	print(str)
+	print()
 	return None
 
 def readTests():
@@ -32,52 +33,42 @@ def readTests():
 		i = 0
 		for line in open(filename, "r").readlines():
 			line = line.replace('\n', '')
-			arr.append(line)
+			tests.append(line)
 			i+=1
 	except IOError:
 		print("Cannot read file")
-	return arr		#return a list of strings to main
+	return tests		#return a list of strings to main
 
 def printClass():
-	for line in arr:
+	for line in tests:
 		print(line)
 
 def main():
 	#createDict() // later version for reading in file of test keys
 	printKey()		#prints the key being used
 	readTests()		#read in the tests from a standard .txt file
-		#print the array of test values before alteration
-	printClass()
-	#do the altering of test scores
-	#algorithm to create n different random numbers
-	#for each value in the array of random numbers
-	#change the test score to the value stored in the dictionary
-	#REMEMBER: the array value is going to be off by one from dict
-	#add the string back to the array of tests
+	printClass()	#print the array of test values before alteration
+	
+	#do the altering of test scores in a while loop
+	i=0
+	randList=[]
+	while i < len(tests):
+		randList = sample(range(1, 20), 5) #generate random list of numbers
+		
+		str = tests[i]
+		j=0
+		#for each value in the array of random numbers, change the test score to the value stored in the dictionary
+		for j in randList:	
+			firHalf = str[:j-1]
+			secHalf = str[j:]
+			str = firHalf + testKey[j] + secHalf
+			j+=1
+		tests[i] = str		#add the string back to the array of tests
+		i+=1
+
 	#print the class again to determine if it changed correctly
+	print()
+	printClass()
 	return None
 
 main()
-
-#Answer string is the students answers in numerical order from 1 to testLength
-#for one test as a string
-#Store the given Answer string in a variable
-#create 6 random numbers from 1 to numQuestions
-#store the six random variables in an array
-#these are the six questions which will have their answers changed
-#Inside a loop, change the six questions by using the dictionary
-#and altering the answer string
-#1.A letter indicates the student answered it correctly and can be skipped
-#2.A number indicates the student answered with the incorrect answer
-#3.A 0 indicates it was left blank
-
-#For cases 2&3, find dictionary mapping for that question using the position in
-#the character array and altering using the respective dicitonaries
-
-#print out the new string
-
-#Inside a function:
-#create a dictionary and enumerate each of 1 through numQuestions
-#with the correct answer for this fictitious test
-#create a smaller dictionary mapping 1="A", 2="B", 3="C", 4="D" for conversions
-#return to main
