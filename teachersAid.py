@@ -15,6 +15,7 @@ tests=[]
 #def createKey():
 	#return testKey // later version for reading in a file
 
+#prints the key initialized in the program
 def printKey():
 	print("The test key is:")
 	str = ""
@@ -26,6 +27,7 @@ def printKey():
 	print()
 	return None
 
+#reads each test from a file called grades.txt and creates a list out of them
 def readTests():
 	try:
 		filename = "grades.txt"
@@ -37,8 +39,9 @@ def readTests():
 	except IOError:
 		print("Cannot read file")
 		exit(1)
-	return tests		#return a list of strings to main
+	return tests		#return a list of student's answers as strings to main
 
+#print the class test answers
 def printClass():
 	print("The class test answers are:")
 	for line in tests:
